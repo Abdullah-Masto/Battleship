@@ -1,4 +1,4 @@
-import GameBoard from "./Gameboard";
+import GameBoard from "./Gameboard.js";
 
 class Player {
   gameBoard;
@@ -34,16 +34,61 @@ class Player {
 
   randomAttack(player) {
     if (player.isLost()) return;
-    let coord;
-    let x = Number.parseInt(Math.random() * 9);
-    let y = Number.parseInt(Math.random() * 9);
-    coord = [x, y];
-    while (player.hitCoordinates.includes(JSON.stringify(coord))) {
-      x = Number.parseInt(Math.random() * 9);
-      y = Number.parseInt(Math.random() * 9);
-      coord = [x, y];
+    let validPos = [];
+    for (let i = 0; i < 10; i++) {
+      for (let j = 0; j < 10; j++) {
+        if (!player.hitCoordinates.includes(JSON.stringify([j, i]))) {
+          validPos = validPos.concat([[j, i]]);
+        }
+      }
     }
-    this.Attack(x, y, player);
+    let index = Number.parseInt(Math.random() * validPos.length - 1);
+    this.Attack(validPos[index][0], validPos[index][1], player);
+  }
+
+  setShipsRandomly() {
+    this.placeShipRandomly(5);
+    this.placeShipRandomly(4);
+    this.placeShipRandomly(3);
+    this.placeShipRandomly(3);
+    this.placeShipRandomly(2);
+    this.placeShipRandomly(1);
+  }
+
+  placeShipRandomly(length) {
+    let flag = Math.random() > 0.55;
+    let emptyPos = [];
+    for (let i = 0; i < 10; i++) {
+      for (let j = 0; j < 10; j++) {
+        if (this.gameBoard.board[i][j] === null) {
+          let isValid = true;
+          if (flag) {
+            for (let k = 1; k < length; k++) {
+              if (k + j > 9 || this.gameBoard.board[i][k + j] !== null) {
+                isValid = false;
+                break;
+              }
+            }
+          } else {
+            for (let k = 1; k < length; k++) {
+              if (k + i > 9 || this.gameBoard.board[k + i][j] !== null) {
+                isValid = false;
+                break;
+              }
+            }
+          }
+          if (isValid) emptyPos = emptyPos.concat([[i, j]]);
+        }
+      }
+    }
+
+    if (emptyPos.length !== 0) {
+      let rand = Number.parseInt(Math.random() * (emptyPos.length - 1));
+      let pos = emptyPos[rand];
+
+      this.gameBoard.setShip(length, flag, pos[1], pos[0]);
+      return true;
+    } else return false;
   }
 }
 

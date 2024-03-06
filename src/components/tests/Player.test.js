@@ -1,4 +1,4 @@
-import Player from "../Player";
+import Player from "../Player.js";
 
 let player1 = new Player("p1");
 let computer = new Player("computer");

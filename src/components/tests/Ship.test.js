@@ -1,4 +1,4 @@
-import Ship from "../Ship";
+import Ship from "../Ship.js";
 
 let ship = new Ship(4);
 

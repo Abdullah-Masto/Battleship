@@ -4,6 +4,32 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Battleship</title>
+    <link
+      rel="shortcut icon"
+      href="noun-ship-6640553.svg"
+      type="image/x-icon"
+    />
+    <link rel="stylesheet" href="css/normalize.css" />
+    <link rel="stylesheet" href="css/style.css" />
+    <script src="src/index.js" defer type="module"></script>
   </head>
-  <body></body>
+  <body>
+    <header id="header">
+      <span>Battleship</span>
+    </header>
+    <div id="message"></div>
+    <button id="playAgain">play again</button>
+    <main id="main">
+      <div id="p1" class="container"></div>
+      <div id="p2" class="container"></div>
+    </main>
+    <div id="setting">
+      <div class="title">Welcome to Battleship</div>
+      <div class="text">place your ships</div>
+      <button id="rotate">Rotate</button>
+      <div class="container"></div>
+    </div>
+    <div class="overlay"></div>
+    <div class="peace"></div>
+  </body>
 </html>

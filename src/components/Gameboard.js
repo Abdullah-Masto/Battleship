@@ -1,11 +1,11 @@
-import Ship from "./Ship";
+import Ship from "./Ship.js";
 
 class GameBoard {
-  #board;
+  board;
   #ships;
   #shipsLeft;
   constructor() {
-    this.#board = this.#createBoard();
+    this.board = this.#createBoard();
     this.#ships = [];
     this.#shipsLeft = 0;
   }
@@ -36,9 +36,9 @@ class GameBoard {
 
     for (let i = 0; i < shipLength; i++) {
       if (isHorizontal) {
-        if (this.#board[y][x + i] !== null) return false;
+        if (this.board[y][x + i] !== null) return false;
       } else {
-        if (this.#board[y + i][x] !== null) return false;
+        if (this.board[y + i][x] !== null) return false;
       }
     }
 
@@ -46,8 +46,8 @@ class GameBoard {
     this.#shipsLeft++;
     this.#ships = this.#ships.concat(ship);
     for (let i = 0; i < shipLength; i++) {
-      if (isHorizontal) this.#board[y][x + i] = ship;
-      else this.#board[y + i][x] = ship;
+      if (isHorizontal) this.board[y][x + i] = ship;
+      else this.board[y + i][x] = ship;
     }
     return true;
   }
@@ -58,19 +58,19 @@ class GameBoard {
 
     if (x < 0 || x > 9 || y < 0 || y > 9) throw "out of bound coordinate";
 
-    if (this.#board[y][x] === 1 || this.#board[y][x] === -1) return false;
+    if (this.board[y][x] === 1 || this.board[y][x] === -1) return false;
 
-    if (this.#board[y][x] === null) {
-      this.#board[y][x] = -1;
+    if (this.board[y][x] === null) {
+      this.board[y][x] = -1;
       return false;
-    } else if (this.#board[y][x] instanceof Ship) {
-      let ship = this.#board[y][x];
+    } else if (this.board[y][x] instanceof Ship) {
+      let ship = this.board[y][x];
       ship.hit();
       if (ship.isSunk()) {
         this.#ships.splice(this.#ships.indexOf(ship), 1);
         this.#shipsLeft--;
       }
-      this.#board[y][x] = 1;
+      this.board[y][x] = 1;
       return true;
     }
   }
